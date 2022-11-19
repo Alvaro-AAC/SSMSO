@@ -145,7 +145,11 @@
     });
 
     function login() {
-        location.href = '/perfil';
+        if($('#correo').val === 'admin') {
+            location.href = 'subdirector/perfil';
+        } else {
+            location.href = '/perfil';
+        }
     }
 </script>
 </body>
