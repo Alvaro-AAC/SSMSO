@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+<head>
+    {% include 'common/head.html' %}
+    <link href="{% static 'css/disponibilidad.css' %}" rel="stylesheet">
+</head>
+<body>
+    {% include 'common/header.html' %}
+    <content>
+        <div id="cajacentral">
+            <a href="/programacion/pabellon/" class="ms-5 mt-4 volver">&LeftArrow; Volver</a>
+            <h2 class="mb-4 titlerespab">Médico</h2>
+            <div id="divfecha">
+                <input type="date" class="form-control w-25 d-inline" id="respabfecha">
+                <button class="carets" onclick="oneback()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-caret-left" 
+                    width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" 
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M18 15l-6 -6l-6 6h12" transform="rotate(270 12 12)" />
+                </svg>
+                </button>
+                <button class="carets" onclick="oneforward()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-caret-right"
+                    width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M18 15l-6 -6l-6 6h12" transform="rotate(90 12 12)" />
+                    </svg>
+                </button>
+            </div>
+            <div id="wrapper">
+                <table class="mt-2" id="tablahorario">
+                    <thead id="tablerespabhead">
+                    </thead>
+                    <tbody id="tablerespabbody">
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center d-block w-100 mt-3 mb-3">
+                <div class="legend legend1">&nbsp;</div><p class="legendtext">Disponible</p>
+                <div class="legend legend3">&nbsp;</div><p class="legendtext">No disponible</p>
+            </div>
+        </div>
+    </content>
+
+    {% include 'common/footer.html' %}
+    {% include 'common/scripts.html' %}
+    <script src="{% static 'js/disponibilidad.js' %}"></script>
+</body>
+</html>

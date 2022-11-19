@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+<head>
+    {% include 'common/head.html' %}
+    <link rel="stylesheet" href="{% static 'css/recursos.css' %}">
+</head>
+<body>
+    {% include 'common/header.html' %}
+
+    <content>
+        <div id="cajacentral">
+            <h2 class="title mt-4 mb-3">Disponibilidad recursos</h2>
+            <br>
+            <table>
+                {% for key, value in recursos.items %}
+                <tr>
+                    <td class="tdsup">
+                        <p class="d-inline recursonombre">{{key}}</p>
+                    </td>
+                    <td class="tdsup">
+                        <p class="recursoporc text-end" id="{{forloop.counter}}">{{value}}%</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="tdinf">
+                        <progress class="progress w-100 d-inline-block recursobar" value="{{value}}" max="100"></progress>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <br>
+            <button class="btn btn-primary m-3 mb-5" onclick="gotoreservarrecursos()">Ir a reservar</button>
+        </div>      
+    </content>
+
+
+    {% include 'common/footer.html' %}
+    {% include 'common/scripts.html' %}
+    <script>
+        var counter = 1;
+        $(document).ready(() => {
+            [...$('.recursobar')].forEach(elem => {
+                if(elem.value.between(31, 50)) {
+                    $('#' + counter).addClass('text-warning');
+                } else if(elem.value <= 30) {
+                    $('#' + counter).addClass('text-danger');
+                }
+                counter++;
+            });
+        });
+
+        Number.prototype.between = function(a, b) {return a <= this && this <= b};
+
+        const gotoreservarrecursos = () => location.href = '/programacion/recursos/reservar/';
+    </script>
+</body>
+</html>
