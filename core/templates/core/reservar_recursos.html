@@ -41,7 +41,13 @@
         });
 
         function reservar() {
-            return undefined;
+            Swal.fire({
+                icon: 'success',
+                title: 'Reserva confirmada',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                location.href = '/';
+            });
         }
     </script>
 </body>
