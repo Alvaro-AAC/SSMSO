@@ -6,7 +6,7 @@
 from django.db import models
 
 class Atencion(models.Model):
-    id_atencion = models.BigIntegerField(primary_key=True)
+    id_atencion = models.BigAutoField(primary_key=True)
     fecha = models.DateField()
     motivo = models.CharField(max_length=200)
     descripcion = models.CharField(max_length=1000, blank=True, null=True)
@@ -17,10 +17,11 @@ class Atencion(models.Model):
     class Meta:
         managed = False
         db_table = 'atencion'
+        verbose_name_plural = 'Atenciones'
 
 
 class BitacoraCirugia(models.Model):
-    id_bitacora_cirugia = models.BigIntegerField(primary_key=True)
+    id_bitacora_cirugia = models.BigAutoField(primary_key=True)
     detalle = models.CharField(max_length=3000)
     fecha = models.DateField()
     hora = models.DateTimeField()
@@ -29,6 +30,7 @@ class BitacoraCirugia(models.Model):
     class Meta:
         managed = False
         db_table = 'bitacora_cirugia'
+        verbose_name_plural = 'Bitacoras de cirugia'
 
 
 class Cargo(models.Model):
@@ -38,16 +40,18 @@ class Cargo(models.Model):
     class Meta:
         managed = False
         db_table = 'cargo'
+        verbose_name_plural = 'Cargos'
 
 
 class Cirugia(models.Model):
-    id_cirugia = models.BigIntegerField(primary_key=True)
+    id_cirugia = models.BigAutoField(primary_key=True)
     fecha = models.DateField()
     id_reserva_cirugia = models.OneToOneField('ProgramacionCirugia', models.DO_NOTHING, db_column='id_reserva_cirugia')
 
     class Meta:
         managed = False
         db_table = 'cirugia'
+        verbose_name_plural = 'Cirugias'
 
 
 class Ciudad(models.Model):
@@ -58,6 +62,7 @@ class Ciudad(models.Model):
     class Meta:
         managed = False
         db_table = 'ciudad'
+        verbose_name_plural = 'Ciudades'
 
 
 class Comuna(models.Model):
@@ -68,20 +73,22 @@ class Comuna(models.Model):
     class Meta:
         managed = False
         db_table = 'comuna'
+        verbose_name_plural = 'Comunas'
 
 
 class DetalleUnidad(models.Model):
-    id_detalle_unidad = models.BigIntegerField(primary_key=True)
+    id_detalle_unidad = models.BigAutoField(primary_key=True)
     id_unidad = models.ForeignKey('Unidad', models.DO_NOTHING, db_column='id_unidad')
     id_medico = models.ForeignKey('Medico', models.DO_NOTHING, db_column='id_medico')
 
     class Meta:
         managed = False
         db_table = 'detalle_unidad'
+        verbose_name_plural = 'Detalle unidades'
 
 
 class DisponibilidadPabellon(models.Model):
-    id_disponibilidad_pabellon = models.BigIntegerField(primary_key=True)
+    id_disponibilidad_pabellon = models.BigAutoField(primary_key=True)
     disponible = models.CharField(max_length=1)
     id_pabellon = models.ForeignKey('Pabellon', models.DO_NOTHING, db_column='id_pabellon')
     id_modulo = models.ForeignKey('Modulo', models.DO_NOTHING, db_column='id_modulo')
@@ -89,10 +96,11 @@ class DisponibilidadPabellon(models.Model):
     class Meta:
         managed = False
         db_table = 'disponibilidad_pabellon'
+        verbose_name_plural = 'Disponibilidad pabellones'
 
 
 class Evaluacion(models.Model):
-    id_evaluacion = models.BigIntegerField(primary_key=True)
+    id_evaluacion = models.BigAutoField(primary_key=True)
     id_paciente = models.ForeignKey('Paciente', models.DO_NOTHING, db_column='id_paciente')
     fecha = models.DateField()
     atencion = models.CharField(max_length=50)
@@ -103,6 +111,7 @@ class Evaluacion(models.Model):
         managed = False
         db_table = 'evaluacion'
         unique_together = (('id_evaluacion', 'id_paciente'),)
+        verbose_name_plural = 'Evaluaciones'
 
 
 class Medico(models.Model):
@@ -127,6 +136,7 @@ class Medico(models.Model):
     class Meta:
         managed = False
         db_table = 'medico'
+        verbose_name_plural = 'Medicos'
 
 
 class Modulo(models.Model):
@@ -137,6 +147,7 @@ class Modulo(models.Model):
     class Meta:
         managed = False
         db_table = 'modulo'
+        verbose_name_plural = 'Modulos'
 
 
 class Pabellon(models.Model):
@@ -148,10 +159,11 @@ class Pabellon(models.Model):
     class Meta:
         managed = False
         db_table = 'pabellon'
+        verbose_name_plural = 'Pabellones'
 
 
 class Paciente(models.Model):
-    id_paciente = models.BigIntegerField(primary_key=True)
+    id_paciente = models.BigAutoField(primary_key=True)
     rut = models.IntegerField()
     dv = models.CharField(max_length=1)
     nombre = models.CharField(max_length=50)
@@ -165,10 +177,11 @@ class Paciente(models.Model):
     class Meta:
         managed = False
         db_table = 'paciente'
+        verbose_name_plural = 'Pacientes'
 
 
 class ProgramacionCirugia(models.Model):
-    id_reserva_cirugia = models.BigIntegerField(primary_key=True)
+    id_reserva_cirugia = models.BigAutoField(primary_key=True)
     fecha = models.DateField()
     notificado = models.CharField(max_length=1)
     id_medico = models.ForeignKey(Medico, models.DO_NOTHING, db_column='id_medico')
@@ -179,6 +192,7 @@ class ProgramacionCirugia(models.Model):
     class Meta:
         managed = False
         db_table = 'programacion_cirugia'
+        verbose_name_plural = 'Programacion de cirugias'
 
 
 class Recurso(models.Model):
@@ -192,6 +206,7 @@ class Recurso(models.Model):
     class Meta:
         managed = False
         db_table = 'recurso'
+        verbose_name_plural = 'Recursos'
 
 
 class Region(models.Model):
@@ -201,10 +216,11 @@ class Region(models.Model):
     class Meta:
         managed = False
         db_table = 'region'
+        verbose_name_plural = 'Regiones'
 
 
 class ReservaPabellon(models.Model):
-    id_reserva = models.BigIntegerField(primary_key=True)
+    id_reserva = models.BigAutoField(primary_key=True)
     fecha = models.DateField()
     id_reserva_cirugia = models.OneToOneField(ProgramacionCirugia, models.DO_NOTHING, db_column='id_reserva_cirugia')
     id_disponibilidad_pabellon = models.ForeignKey(DisponibilidadPabellon, models.DO_NOTHING, db_column='id_disponibilidad_pabellon')
@@ -212,6 +228,7 @@ class ReservaPabellon(models.Model):
     class Meta:
         managed = False
         db_table = 'reserva_pabellon'
+        verbose_name_plural = 'Reserva pabellones'
 
 
 class ReservaRecurso(models.Model):
@@ -223,11 +240,13 @@ class ReservaRecurso(models.Model):
         managed = False
         db_table = 'reserva_recurso'
         unique_together = (('id_recurso', 'id_reserva'),)
+        verbose_name_plural = 'Reserva recursos'
 
 
 class Unidad(models.Model):
-    id_unidad = models.BigIntegerField(primary_key=True)
+    id_unidad = models.BigAutoField(primary_key=True)
 
     class Meta:
         managed = False
         db_table = 'unidad'
+        verbose_name_plural = 'Unidades'
