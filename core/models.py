@@ -42,6 +42,9 @@ class Cargo(models.Model):
         db_table = 'cargo'
         verbose_name_plural = 'Cargos'
 
+    def __str__(self):
+        return self.descripcion
+
 
 class Cirugia(models.Model):
     id_cirugia = models.BigAutoField(primary_key=True)
@@ -64,16 +67,8 @@ class Ciudad(models.Model):
         db_table = 'ciudad'
         verbose_name_plural = 'Ciudades'
 
-
-class Comuna(models.Model):
-    id_comuna = models.BigAutoField(primary_key=True)
-    descripcion = models.CharField(max_length=150)
-    id_ciudad = models.ForeignKey(Ciudad, models.CASCADE, db_column='id_ciudad')
-
-    class Meta:
-        managed = True
-        db_table = 'comuna'
-        verbose_name_plural = 'Comunas'
+    def __str__(self):
+        return self.descripcion
 
 
 class DetalleUnidad(models.Model):
@@ -130,13 +125,16 @@ class Medico(models.Model):
     administrador = models.CharField(max_length=1)
     habilitado = models.CharField(max_length=1)
     id_cargo = models.ForeignKey(Cargo, models.CASCADE, db_column='id_cargo')
-    id_comuna = models.ForeignKey(Comuna, models.CASCADE, db_column='id_comuna')
+    id_ciudad = models.ForeignKey(Ciudad, models.CASCADE, db_column='id_ciudad')
     id_jefe = models.ForeignKey('self', models.CASCADE, db_column='id_jefe', blank=True, null=True)
 
     class Meta:
         managed = True
         db_table = 'medico'
         verbose_name_plural = 'Medicos'
+
+    def __str__(self):
+        return f'{self.rut}-{self.dv} / {self.nombre} {self.apellido_p}'
 
 
 class Modulo(models.Model):
@@ -217,6 +215,9 @@ class Region(models.Model):
         managed = True
         db_table = 'region'
         verbose_name_plural = 'Regiones'
+
+    def __str__(self):
+        return self.descripcion
 
 
 class ReservaPabellon(models.Model):
