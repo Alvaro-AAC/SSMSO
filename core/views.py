@@ -11,51 +11,62 @@ def inicio(request):
         return redirect('/login')
 
 def login(request):
-    try:
-        username = request.session['username']
-        return redirect('/perfil')
-    except KeyError:
-        return render(request, 'core/login.html')
+    ctx = {}
+    ctx['error'] = False
+    if request.method == 'GET':
+        try:
+            username = request.session['username']
+            return redirect('/perfil')
+        except KeyError:
+            return render(request, 'core/login.html', ctx)
+    elif request.method == 'POST':
+        try:
+            username = request.session['username']
+            return redirect('/perfil')
+        except KeyError:
+            correo = request.POST['correo']
+            password = request.POST['password']
+            try:
+                medico = Medico.objects.get(correo=correo, password=password)
+                request.session['username'] = medico.correo
+                return redirect('/perfil')
+            except Medico.DoesNotExist:
+                ctx['error'] = True
+            return render(request, 'core/login.html', ctx)
 
 def perfil(request):
     try:
         username = request.session['username']
         return render(request, 'core/perfil.html')
     except KeyError:
-        # return redirect('/login')
-        return render(request, 'core/perfil.html')
+        return redirect('/login')
 
 def programacion_cirugia(request):
     try:
         username = request.session['username']
-        return render(request, 'core/programacion_cirugia.html')
     except KeyError:
-        # return redirect('/login')
-        return render(request, 'core/programacion_cirugia.html')
+        return redirect('/login')
 
 def programacion_pabellon(request):
     try:
         username = request.session['username']
         return render(request, 'core/programacion_pabellon.html')
     except KeyError:
-        # return redirect('/login')
-        return render(request, 'core/programacion_pabellon.html')
+        return redirect('/login')
 
 def reservar_pabellon(request):
     try:
         username = request.session['username']
         return render(request, 'core/reservar_pabellon.html')
     except KeyError:
-        # return redirect('/login')
-        return render(request, 'core/reservar_pabellon.html')
+        return redirect('/login')
 
 def disponibilidad_pabellon(request):
     try:
         username = request.session['username']
         return render(request, 'core/disponibilidad_pabellon.html')
     except KeyError:
-        # return redirect('/login')
-        return render(request, 'core/disponibilidad_pabellon.html')
+        return redirect('/login')
 
 def disponibilidad_recursos(request):
     ctx = {
@@ -71,8 +82,7 @@ def disponibilidad_recursos(request):
         username = request.session['username']
         return render(request, 'core/disponibilidad_recursos.html', ctx)
     except KeyError:
-        # return redirect('/login')
-        return render(request, 'core/disponibilidad_recursos.html', ctx)
+        return redirect('/login')
 
 def reservar_recursos(request):
     ctx = {
@@ -88,5 +98,8 @@ def reservar_recursos(request):
         username = request.session['username']
         return render(request, 'core/reservar_recursos.html', ctx)
     except KeyError:
-        # return redirect('/login')
-        return render(request, 'core/reservar_recursos.html', ctx)
+        return redirect('/login')
+
+def logout(request):
+    request.session.flush()
+    return redirect('/login')
