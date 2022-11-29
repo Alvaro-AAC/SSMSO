@@ -1,39 +1,50 @@
 from django.shortcuts import render, redirect
+from core.models import *
+from functools import wraps
 
 # Create your views here.
 
+def subdirector_only(function):
+    @wraps(function)
+    def wrap(request, *args, **kwargs):
+        try:
+            username = request.session['username']
+            try:
+                medico = Medico.objects.get(correo = username)
+                if medico.administrador in '1':
+                    return function(request ,user=medico)
+                else:
+                    return redirect('/perfil')
+            except Medico.DoesNotExist:
+                request.session.flush()
+                redirect('/login')
+        except KeyError:
+            return redirect('/login')
+    return wrap
+
 def inicio(request):
-    try:
-        username = request.session['username']
-        return redirect('subdirector/perfil')
-    except KeyError:
-        return redirect('/login')
+    return redirect('subdirector/perfil')
 
-def perfil(request):
-    try:
-        username = request.session['username']
-        return render(request, 'subdirector/perfil.html')
-    except KeyError:
-        # return redirect('/login')
-        return render(request, 'subdirector/perfil.html')
+@subdirector_only
+def perfil(request, user=None):
+    ctx = {}
+    ctx['user'] = user
+    return render(request, 'subdirector/perfil.html', ctx)
 
-def disponibilizar_pabellon(request):
-    try:
-        username = request.session['username']
-        return render(request, 'subdirector/disponibilizar_pabellon.html')
-    except KeyError:
-        # return redirect('/login')
-        return render(request, 'subdirector/disponibilizar_pabellon.html')
+@subdirector_only
+def disponibilizar_pabellon(request, user=None):
+    ctx = {}
+    ctx['user'] = user
+    return render(request, 'subdirector/disponibilizar_pabellon.html', ctx)
 
-def informe(request):
-    try:
-        username = request.session['username']
-        return render(request, 'subdirector/informe.html')
-    except KeyError:
-        # return redirect('/login')
-        return render(request, 'subdirector/informe.html')
+@subdirector_only
+def informe(request, user=None):
+    ctx = {}
+    ctx['user'] = user
+    return render(request, 'subdirector/informe.html', ctx)
 
-def disponibilizar_recursos(request):
+@subdirector_only
+def disponibilizar_recursos(request, user=None):
     ctx = {
         'recursos': {
             'Insumos disponibles': 15,
@@ -43,9 +54,4 @@ def disponibilizar_recursos(request):
             'Equipos quirúrgicos': 100,
         }, 
     }
-    try:
-        username = request.session['username']
-        return render(request, 'subdirector/disponibilizar_recursos.html', ctx)
-    except KeyError:
-        # return redirect('/login')
-        return render(request, 'subdirector/disponibilizar_recursos.html', ctx)
+    return render(request, 'subdirector/disponibilizar_recursos.html', ctx)

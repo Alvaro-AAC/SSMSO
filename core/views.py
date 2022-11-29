@@ -1,7 +1,25 @@
 from django.shortcuts import redirect, render
 from .models import *
+from functools import wraps
 
 # Create your views here.
+def medicos_only(function):
+  @wraps(function)
+  def wrap(request, *args, **kwargs):
+        try:
+            username = request.session['username']
+            try:
+                medico = Medico.objects.get(correo = username)
+                if medico.administrador != '1':
+                    return function(request, user=medico)
+                else:
+                    return redirect('/subdirector/perfil')
+            except Medico.DoesNotExist:
+                request.session.flush()
+                redirect('/login')
+        except KeyError:
+            return redirect('/login')
+  return wrap
 
 def inicio(request):
     try:
@@ -34,41 +52,40 @@ def login(request):
                 ctx['error'] = True
             return render(request, 'core/login.html', ctx)
 
-def perfil(request):
-    try:
-        username = request.session['username']
-        return render(request, 'core/perfil.html')
-    except KeyError:
-        return redirect('/login')
+@medicos_only
+def perfil(request, user=None):
+    ctx = {}
+    ctx['user'] = user
+    return render(request, 'core/perfil.html', ctx)
 
-def programacion_cirugia(request):
-    try:
-        username = request.session['username']
-    except KeyError:
-        return redirect('/login')
+@medicos_only
+def programacion_cirugia(request, user=None):
+    ctx = {}
+    ctx['user'] = user
+    return render(request, 'core/programacion_cirugia.html', ctx)
 
-def programacion_pabellon(request):
-    try:
-        username = request.session['username']
-        return render(request, 'core/programacion_pabellon.html')
-    except KeyError:
-        return redirect('/login')
+@medicos_only
+def programacion_pabellon(request, user=None):
+    ctx = {}
+    ctx['user'] = user
+    return render(request, 'core/programacion_pabellon.html', ctx)
 
-def reservar_pabellon(request):
-    try:
-        username = request.session['username']
-        return render(request, 'core/reservar_pabellon.html')
-    except KeyError:
-        return redirect('/login')
+@medicos_only
+def reservar_pabellon(request, user=None):
+    ctx = {}
+    ctx['user'] = user
+    return render(request, 'core/reservar_pabellon.html', ctx)
 
-def disponibilidad_pabellon(request):
-    try:
-        username = request.session['username']
-        return render(request, 'core/disponibilidad_pabellon.html')
-    except KeyError:
-        return redirect('/login')
+@medicos_only
+def disponibilidad_pabellon(request, user=None):
+    ctx = {}
+    ctx['user'] = user
+    return render(request, 'core/disponibilidad_pabellon.html', ctx)
 
-def disponibilidad_recursos(request):
+@medicos_only
+def disponibilidad_recursos(request, user=None):
+    ctx = {}
+    ctx['user'] = user
     ctx = {
         'recursos': {
             'Insumos disponibles': 15,
@@ -78,13 +95,12 @@ def disponibilidad_recursos(request):
             'Equipos quirúrgicos': 100,
         }, 
     }
-    try:
-        username = request.session['username']
-        return render(request, 'core/disponibilidad_recursos.html', ctx)
-    except KeyError:
-        return redirect('/login')
+    return render(request, 'core/disponibilidad_recursos.html', ctx)
 
-def reservar_recursos(request):
+@medicos_only
+def reservar_recursos(request, user=None):
+    ctx = {}
+    ctx['user'] = user
     ctx = {
         'recursos': {
             'Insumos disponibles': 15,
@@ -94,11 +110,7 @@ def reservar_recursos(request):
             'Equipos quirúrgicos': 100,
         }, 
     }
-    try:
-        username = request.session['username']
-        return render(request, 'core/reservar_recursos.html', ctx)
-    except KeyError:
-        return redirect('/login')
+    return render(request, 'core/reservar_recursos.html', ctx)
 
 def logout(request):
     request.session.flush()
