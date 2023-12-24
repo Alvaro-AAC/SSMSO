@@ -5,3 +5,4 @@ requests
 cx-oracle
 django-cors-headers
 dotenv
+oracledb

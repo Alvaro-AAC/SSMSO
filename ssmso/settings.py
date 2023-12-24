@@ -11,9 +11,13 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import sys
+from dotenv import get_key
+import oracledb
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -78,12 +82,29 @@ WSGI_APPLICATION = 'ssmso.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+oracledb.version = "8.3.0"
+sys.modules["cx_Oracle"] = oracledb
+dsn = '''(description= (retry_count=2)
+            (retry_delay=3)(address=(protocol=tcps)(port=1521)
+            (host=adb.sa-santiago-1.oraclecloud.com))(connect_data=
+            (service_name=g722d0e58d6fa66_clasesdb_high.adb.oraclecloud.com))
+            (security=(ssl_server_dn_match=yes)))'''
+
 DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': dsn,
+        'USER': 'ssmso',
+        'PASSWORD': get_key(BASE_DIR.__str__() + '\\.env', 'PWD')
+    }
+}
+
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}
+}"""
 
 
 # Password validation
