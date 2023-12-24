@@ -81,7 +81,12 @@
 
             <div id="cajaderecha" class="form-group">
                 <h1 style="font-size: 32px;">Iniciar sesión</h1>
-                <form action='' method="GET">
+                {% if error %}
+                <div style="background-color: tomato; color: white; border-radius: 10px; margin-bottom: 1rem;">
+                    <p class="text-center p-1 m-1">Las credenciales ingresadas no son correctas</p>
+                </div>
+                {% endif %}
+                <form action='/login/' method="POST">
                     {% csrf_token %}
                     <label for="correo" class="label">Correo electrónico:</label>
                     <input type="text" class="form-control" id="correo" name="correo" required>
@@ -100,7 +105,7 @@
                     </button>
                     <br>
                     <div>
-                        <button class="btn btn-danger" onclick="login()" type="button">Iniciar sesión</button>
+                        <input class="btn btn-danger" type="submit" value="Iniciar sesión"/>
                         <a href="#" id="recpass">Recuperar contraseña</a>
                     </div>
                 </form>
