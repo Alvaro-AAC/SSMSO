@@ -32,3 +32,20 @@ def informe(request):
     except KeyError:
         # return redirect('/login')
         return render(request, 'subdirector/informe.html')
+
+def disponibilizar_recursos(request):
+    ctx = {
+        'recursos': {
+            'Insumos disponibles': 15,
+            'Unidades de apoyo clínico': 40,
+            'Diagnóstico y terapeútico': 90,
+            'Recursos humanos': 85,
+            'Equipos quirúrgicos': 100,
+        }, 
+    }
+    try:
+        username = request.session['username']
+        return render(request, 'subdirector/disponibilizar_recursos.html', ctx)
+    except KeyError:
+        # return redirect('/login')
+        return render(request, 'subdirector/disponibilizar_recursos.html', ctx)

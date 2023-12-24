@@ -10,17 +10,18 @@
 
     <content>
         <div id="cajacentral">
-            <h2 class="title m-4">Reservar recurso</h2>
+            <h2 class="title m-4">Disponibilizar recursos</h2>
             <table>
                 {% for key, value in recursos.items %}
                 <tr>
                     <td class="pt-3 pb-3"><p class="nombrerecurso">{{key}}:</p></td>
-                    <td class="pt-3 pb-3"><input class="form-control w-50" type="number" id="cuantity{{forloop.counter}}" min="0" max="{{value}}" counter="{{forloop.counter}}"><small>Max: {{value}}</small></td>
-                    <td class="pt-3 pb-3"><input class="form-range" type="range" name="{{key}}" id="{{forloop.counter}}" min="0" max="{{value}}" value="0"></td>
+                    {% widthratio value 1 -1 as result %}
+                    <td class="pt-3 pb-3"><input class="form-control w-50" type="number" id="cuantity{{forloop.counter}}" min="0" max="{{result|add:"100"}}" counter="{{forloop.counter}}"><small>Actual: {{value}}</small></td>
+                    <td class="pt-3 pb-3"><input class="form-range" type="range" name="{{key}}" id="{{forloop.counter}}" min="0" max="{{result|add:"100"}}" value="0"></td>
                 </tr>
                 {% endfor %}
             </table>
-            <button class="btn btn-primary m-4" onclick="reservar()">Realizar reserva</button>
+            <button class="btn btn-primary m-4" onclick="disponibilizar()">Disponibilizar</button>
         </div>      
     </content>
 
@@ -40,10 +41,10 @@
             $('#' + this.getAttribute('counter')).val(this.value);
         });
 
-        function reservar() {
+        function disponibilizar() {
             Swal.fire({
                 icon: 'success',
-                title: 'Reserva confirmada',
+                title: 'Disponibilización confirmada',
                 confirmButtonText: 'Aceptar'
             }).then(() => {
                 location.href = '/';
