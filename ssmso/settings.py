@@ -93,8 +93,8 @@ dsn = '''(description= (retry_count=2)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': dsn,
-        'USER': 'ssmso',
+        'NAME': get_key(BASE_DIR.__str__() + '/.env', 'DSN'),
+        'USER': get_key(BASE_DIR.__str__() + '/.env', 'USR'),
         'PASSWORD': get_key(BASE_DIR.__str__() + '/.env', 'PWD')
     }
 }
