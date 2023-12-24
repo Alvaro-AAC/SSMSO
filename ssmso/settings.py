@@ -95,7 +95,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.oracle',
         'NAME': dsn,
         'USER': 'ssmso',
-        'PASSWORD': get_key(BASE_DIR.__str__() + '\\.env', 'PWD')
+        'PASSWORD': get_key(BASE_DIR.__str__() + '/.env', 'PWD')
     }
 }
 
