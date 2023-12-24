@@ -4,5 +4,5 @@ django-rest-swagger
 requests
 cx-oracle
 django-cors-headers
-dotenv
+python-dotenv
 oracledb
