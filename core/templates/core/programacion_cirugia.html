@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+<head>
+    {% include 'common/head.html' %}
+</head>
+<body>
+    {% include 'common/header.html' %}
+<style>
+    #cajacentral{
+            display: flex;
+            flex-direction: column;
+            background: white;
+            margin: 5.3% 20% 7.5% 20%;
+            border-radius: 30px;
+            justify-content: space-between;
+            color: black;
+        }
+</style>
+
+    <content>
+        <div id="cajacentral" class="text-center p-5">
+            <h2>Página actualmente en construcción</h2>
+            <h4>(Asignada a otro grupo)</h4>
+            <a href="/programacion/pabellon/" style="color: #0000EE; cursor: pointer; text-decoration: underline; font-weight: bold;">Ver programación de pabellon</a>
+        </div>
+    </content>
+
+    {% include 'common/footer.html' %}
+    {% include 'common/scripts.html' %}
+    <script>
+    </script>
+</body>
+</html>
