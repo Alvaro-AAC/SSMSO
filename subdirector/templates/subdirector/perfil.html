@@ -70,11 +70,11 @@
     <content>
         <div id="cajacentral">
             <div id="cajaizquierda">
-                <img src="{% static 'img/dr.png' %}" class="mb-4">
+                <img src="{% static 'img/user.png' %}" class="mb-4" width="128" height="128">
                 <p id="nombreusuario">
-                    <span>BIENVENIDO DOCTOR(A):</span>
+                    <span>BIENVENIDO<br>SUBDIRECTOR MEDICO:</span>
                     <br>
-                    <span style="color: #FA791C">STEVEN STRANGE</span>
+                    <span style="color: #FA791C">Admin</span>
                     <br>
                     <span class="d-block mt-5" style="font-size: 20px;">¿Que desearía hacer?</span>
                 </p>
@@ -86,11 +86,11 @@
                 </div>
                 <div>
                     <img src="{% static 'img/perfil-img2.png' %}" alt=""width="90" height="90" class="mt-2 mb-2 me-5">
-                    <button class="btn-perfil" onclick="gotocirugia()">Programar cirugía</button>
+                    <button class="btn-perfil" onclick="gotodisponibilizar()">Disponibilizar pabellon</button>
                 </div>
                 <div>
                     <img src="{% static 'img/perfil-img3.png' %}" alt="" width="90" height="90" class="mt-2 mb-2 me-5">
-                    <button class="btn-perfil">Seguimiento paciente</button>
+                    <button class="btn-perfil" onclick="gotodemanda()">Informe demanda quirúrgica</button>
                 </div>
             </div>
         </div>
@@ -99,8 +99,12 @@
     {% include 'common/footer.html' %}
     {% include 'common/scripts.html' %}
     <script>
-        function gotocirugia() {
-            location.href = '/programacion/cirugia';
+        function gotodisponibilizar() {
+            location.href = '/subdirector/disponibilizar/pabellon';
+        }
+
+        function gotodemanda() {
+            location.href = '/subdirector/informe';
         }
     </script>
 </body>
