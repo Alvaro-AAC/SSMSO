@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+<head>
+    {% include 'common/head.html' %}
+</head>
+<body>
+    {% include 'common/header.html' %}
+<style>
+    #cajacentral{
+            display: flex;
+            flex-direction: column;
+            background: white;
+            margin: 40px 20% 40px 20%;
+            border-radius: 30px;
+            justify-content: center;
+            align-items: center;
+            color: black;
+        }
+
+        .btnrespab {
+            padding: 8% 10px 8% 10px;
+            background: linear-gradient(180deg, #2F8CFA 0%, #1C5CA7 100%);
+            box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.25);
+            border-radius: 25px;
+
+        }
+
+        .titlerespab {
+            align-self: start;
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 800;
+            font-size: 42px;
+            line-height: 46px;
+            color: #2F8CFA;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+</style>
+
+    <content>
+        <div id="cajacentral">
+            <h2 class="mt-4 titlerespab text-center w-100">Médico</h2>
+            <table class="mt-2 mb-5">
+                <tr>
+                    <td class="p-3"><img src="{% static 'img/respab-img1.png' %}" alt="" width="96" height="96"></td>
+                    <td class="p-3"><button class="btn btn-primary w-100 btnrespab" onclick="gotoreservarpab()">Reservar pabellón</button></td>
+                </tr>
+                <tr>
+                    <td class="p-3"><img src="{% static 'img/respab-img2.png' %}" alt="" width="96" height="96"></td>
+                    <td class="p-3"><button class="btn btn-primary w-100 btnrespab" onclick="gotoverdisppab()">Ver disponibilidad pabellones</button></td>
+                </tr>
+            </table>
+        </div>
+    </content>
+
+    {% include 'common/footer.html' %}
+    {% include 'common/scripts.html' %}
+    <script>
+        function gotoreservarpab() {
+            location.href = '/programacion/pabellon/reservar/';
+        }
+
+        function gotoverdisppab() {
+            location.href = '/programacion/pabellon/disponibilidad/';
+        }
+    </script>
+</body>
+</html>
