@@ -81,16 +81,16 @@
             </div>
             <div id="cajaderecha">
                 <div>
-                    <img src="{% static 'img/perfil-img1.png' %}" alt="" width="90" height="90" class="mt-2 mb-2 me-5">
-                    <button class="btn-perfil">Itinerario laboral</button>
+                    <img src="{% static 'img/subdirector-img1.png' %}" alt="" width="90" height="90" class="mt-2 mb-2 me-5">
+                    <button class="btn-perfil" onclick="gotodisponibilizarpab()">Disponibilizar pabellón</button>
                 </div>
                 <div>
-                    <img src="{% static 'img/perfil-img2.png' %}" alt=""width="90" height="90" class="mt-2 mb-2 me-5">
-                    <button class="btn-perfil" onclick="gotodisponibilizar()">Disponibilizar pabellon</button>
+                    <img src="{% static 'img/subdirector-img2.png' %}" alt=""width="90" height="90" class="mt-2 mb-2 me-5">
+                    <button class="btn-perfil" onclick="gotodisponibilizarins()">Disponibilizar insumos</button>
                 </div>
                 <div>
-                    <img src="{% static 'img/perfil-img3.png' %}" alt="" width="90" height="90" class="mt-2 mb-2 me-5">
-                    <button class="btn-perfil" onclick="gotodemanda()">Informe demanda quirúrgica</button>
+                    <img src="{% static 'img/subdirector-img3.png' %}" alt="" width="90" height="90" class="mt-2 mb-2 me-5">
+                    <button class="btn-perfil" onclick="gotodemanda()">Demanda quirúrgica</button>
                 </div>
             </div>
         </div>
@@ -99,8 +99,12 @@
     {% include 'common/footer.html' %}
     {% include 'common/scripts.html' %}
     <script>
-        function gotodisponibilizar() {
+        function gotodisponibilizarpab() {
             location.href = '/subdirector/disponibilizar/pabellon';
+        }
+
+        function gotodisponibilizarins() {
+            location.href = '/subdirector/disponibilizar/insumos';
         }
 
         function gotodemanda() {
